@@ -14,7 +14,14 @@ require_relative "rails_worktree/config"
 module RailsWorktree
   class << self
     def config
-      @config ||= Config.load(Rails.root.to_s)
+      @config ||= if File.file?(Rails.root.join(Config::FILE))
+        Config.load(Rails.root.to_s)
+      else
+        # Lets the app boot so the install generator can write the file.
+        name = (Rails.application.class.module_parent_name || Rails.application.class.name).underscore
+        warn "rails_worktree: #{Config::FILE} is missing; using #{name.inspect}. Run bin/rails generate rails_worktree:install."
+        Config.new(Rails.root.to_s, "name" => name)
+      end
     end
 
     # The linked worktree for this checkout in development and test, otherwise nil.

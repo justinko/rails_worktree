@@ -53,6 +53,15 @@ class RailtieTest < Minitest::Test
     end
   end
 
+  def test_boots_without_a_config_file_so_the_generator_can_run
+    File.delete(File.join(@main, "config/worktree.yml"))
+    output, status = boot_process(@main, {})
+
+    assert status.success?, output
+    assert_includes output, "config/worktree.yml is missing"
+    assert_equal "dummy_test", JSON.parse(output.lines.last).fetch("test")
+  end
+
   def test_production_does_not_inspect_git
     result = boot(@linked, "RAILS_ENV" => "production", "GIT_DIR" => "/nonexistent")
 
