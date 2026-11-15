@@ -1,0 +1,7 @@
+version = 1
+name = "<%= app_name %>"
+
+[setup]
+script = '''
+bin/worktree --skip-server
+'''

@@ -1,0 +1,12 @@
+#!/usr/bin/env ruby
+# Prepares this checkout for development. Orca, Codex, and Claude Code run it for new worktrees.
+APP_ROOT = File.expand_path("..", __dir__)
+ENV["BUNDLE_GEMFILE"] ||= File.join(APP_ROOT, "Gemfile")
+
+# A new worktree may need gems that are not installed yet.
+system("bundle", "check", out: File::NULL, err: File::NULL) ||
+  system("bundle", "install", out: :err, exception: true)
+
+require "bundler/setup"
+require "rails_worktree/setup"
+RailsWorktree::Setup.new(APP_ROOT).run(ARGV)

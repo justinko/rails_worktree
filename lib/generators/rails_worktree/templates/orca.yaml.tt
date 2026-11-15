@@ -1,0 +1,5 @@
+scripts:
+  setup: |
+    #!/usr/bin/env bash
+    bin/worktree --skip-server
+setupAgentStartupPolicy: wait-for-setup

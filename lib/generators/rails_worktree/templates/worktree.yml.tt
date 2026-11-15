@@ -1,0 +1,10 @@
+# Worktree isolation settings used by bin/worktree, bin/dev, and the rails_worktree Railtie.
+name: <%= app_name %>
+# Non-primary development databases, listed in bin/worktree output.
+databases: []
+# Gitignored files to symlink from the main checkout into new worktrees.
+link_files:
+  - config/master.key
+require_master_key: false
+seed: false
+notes: []
