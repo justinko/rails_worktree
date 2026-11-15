@@ -49,7 +49,7 @@ module RailsWorktree
     end
 
     def service_name
-      (current || GitWorktree.new(Rails.root.to_s)).service_name(config.name)
+      config.service_name(current || GitWorktree.new(Rails.root.to_s))
     end
 
     def app_url

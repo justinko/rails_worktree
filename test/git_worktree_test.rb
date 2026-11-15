@@ -95,6 +95,12 @@ class GitWorktreeTest < Minitest::Test
     refute worktree.link_file("config/master.key")
   end
 
+  def test_service_names_replace_underscores_for_hostnames
+    config = RailsWorktree::Config.new(@main, "name" => "code_tryout")
+    assert_equal "code-tryout", config.service_name(GitWorktree.new(@main))
+    assert_equal "code_tryout_development", config.database("development")
+  end
+
   def test_git_path_is_specific_to_each_worktree
     refute_equal GitWorktree.new(@main).git_path("marker"), GitWorktree.new(@linked).git_path("marker")
     assert File.absolute_path?(GitWorktree.new(@linked).git_path("marker"))

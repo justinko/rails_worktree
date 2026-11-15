@@ -6,7 +6,7 @@ module RailsWorktree
     def self.run(root, arguments)
       Dir.chdir(root) do
         config = Config.load(root)
-        Portless.run(GitWorktree.new(root).service_name(config.name), "./bin/rails", "server", *arguments)
+        Portless.run(config.service_name(GitWorktree.new(root)), "./bin/rails", "server", *arguments)
       end
     rescue Error => error
       abort error.message

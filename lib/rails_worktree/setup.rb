@@ -63,7 +63,7 @@ module RailsWorktree
 
       def prepare(reset:)
         link_files if development?
-        @app_url = Portless.url(worktree.service_name(config.name)) if development?
+        @app_url = Portless.url(config.service_name(worktree)) if development?
 
         # Child processes inherit file descriptors, so send their output where ours goes.
         out = $stdout.equal?($stderr) ? :err : :out

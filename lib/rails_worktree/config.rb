@@ -28,6 +28,11 @@ module RailsWorktree
       @notes = Array(settings.fetch("notes", []))
     end
 
+    # Portless hostnames cannot contain underscores.
+    def service_name(worktree)
+      worktree.service_name(name.tr("_", "-"))
+    end
+
     def require_master_key? = @require_master_key
     def seed? = @seed
 
